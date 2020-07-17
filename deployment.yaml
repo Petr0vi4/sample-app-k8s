@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sample-app
+  template:
+    metadata:
+      labels:
+        app: sample-app
+    spec:
+      containers:
+        - name: sample-app-nginx
+          image: petr0vi4/sample-app:nginx-v1
+          ports:
+            - name: web
+              containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: web
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 2
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: web
+            initialDelaySeconds: 10
+            periodSeconds: 5
+        - name: sample-app-php-fpm
+          image: petr0vi4/sample-app:php-fpm-v1
+          ports:
+            - name: php-fpm
+              containerPort: 9000

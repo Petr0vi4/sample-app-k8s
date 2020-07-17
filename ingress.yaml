@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: sample-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - host: arch.homework
+      http:
+        paths:
+          - path: /otusapp/petr0vi4($|/)(.*)
+            backend:
+              serviceName: sample-service
+              servicePort: 8000
