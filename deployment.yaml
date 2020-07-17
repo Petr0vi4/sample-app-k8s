@@ -36,3 +36,14 @@ spec:
           ports:
             - name: php-fpm
               containerPort: 9000
+          livenessProbe:
+            tcpSocket:
+              port: php-fpm
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 2
+          readinessProbe:
+            tcpSocket:
+              port: php-fpm
+            initialDelaySeconds: 10
+            periodSeconds: 5
