@@ -11,5 +11,5 @@ spec:
         paths:
           - path: /otusapp/petr0vi4($|/)(.*)
             backend:
-              serviceName: sample-service
-              servicePort: 8000
+              serviceName: {{ include "sample-app-chart.fullname" . }}
+              servicePort: {{ .Values.service.port }}
