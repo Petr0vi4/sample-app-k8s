@@ -4,8 +4,8 @@
 
 replicaCount: 2
 
-imageNginx: petr0vi4/sample-app-nginx:v2
-imagePhpFpm: petr0vi4/sample-app-php-fpm:v2
+imageNginx: petr0vi4/sample-app-nginx:v3
+imagePhpFpm: petr0vi4/sample-app-php-fpm:v3
 
 imageConfig:
   pullPolicy: IfNotPresent
