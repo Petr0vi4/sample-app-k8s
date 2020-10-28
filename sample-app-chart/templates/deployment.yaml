@@ -26,23 +26,6 @@ spec:
       {{- end }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      initContainers:
-        - name: waitfordb
-          image: alpine:3.6
-          command: ["/bin/sh", "-c", 'while ! nc -z {{ include "postgresql.fullname" . }} {{ .Values.postgresql.service.port }}; do echo waiting for db; sleep 2; done']
-        - name: initdb
-          image: {{ .Values.imagePhpFpm }}
-          imagePullPolicy: {{ .Values.imageConfig.pullPolicy }}
-          env:
-            - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: sample-secret
-                  key: DATABASE_URI
-          command:
-            - bin/console
-            - do:mi:mi
-            - "--no-interaction"
       containers:
         - name: "{{ .Chart.Name }}-nginx"
           securityContext:
@@ -61,7 +44,7 @@ spec:
               path: /health
               port: web
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.nginx.resources | nindent 12 }}
         - name: "{{ .Chart.Name }}-php-fpm"
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
@@ -84,7 +67,7 @@ spec:
             tcpSocket:
               port: php-fpm
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.phpFpm.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

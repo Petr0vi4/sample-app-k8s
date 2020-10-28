@@ -1,11 +1,8 @@
-apiVersion: skaffold/v2beta6
+apiVersion: skaffold/v2beta8
 kind: Config
 metadata:
   name: sample-skaffold
 build:
-  tagPolicy:
-    envTemplate:
-      template: "{{.APP_VERSION}}"
   artifacts:
   - image: petr0vi4/sample-app-nginx
     context: ../sample-app
@@ -15,12 +12,6 @@ build:
     context: ../sample-app
     docker:
       target: php-fpm
-#deploy:
-#  kubectl:
-#    manifests:
-#    - deployment.yaml
-#    - service.yaml
-#    - config.yaml
 deploy:
   helm:
     releases:

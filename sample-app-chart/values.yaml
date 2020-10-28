@@ -65,6 +65,16 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
+nginx:
+  resources:
+    limits:
+      memory: 128Mi
+
+phpFpm:
+  resources:
+   limits:
+     memory: 512Mi
+
 autoscaling:
   enabled: false
   minReplicas: 1
@@ -87,3 +97,11 @@ postgresql:
     port: "5432"
   persistence:
     size: 512M
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+
+metrics:
+  serviceMonitor:
+    enabled: true
